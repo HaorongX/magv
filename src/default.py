@@ -5,7 +5,10 @@ import json
 import base64
 
 def INDEX_SERVICE(ext):
-    req = requests.get("https://api.atomgit.com/repos/haorongxu/neon-index/contents/index.json", headers = {"Authorization":""})
+    with open("config.json", "r") as f:
+        token = json.loads(f.read())["Auth-Token"]
+        f.close()
+    req = requests.get("https://api.atomgit.com/repos/haorongxu/neon-index/contents/index.json", headers = {"Authorization":f"Bearer {token}"})
     if not req.status_code == 200:
         raise Exception("Error: Unable to locate given extension")
     b64str = json.loads(req.content)["content"]
