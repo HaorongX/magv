@@ -16,6 +16,8 @@ else:
 
 path_  = arg.path
 if not arg.download == None:
+    if arg.download[1] == "latest":
+        arg.download[1] = "master" # the latest version is always in the master branch
     if path_ == None:
         os.makedirs(arg.download[0] + "/" + arg.download[1], exist_ok = True)
         path = os.path.join(os.getcwd(), arg.download[0] + "/" + arg.download[1])
@@ -29,7 +31,7 @@ if not arg.download == None:
 
 if not arg.install == None:
     if path_ == None:
-        path = os.path.join(os.getcwd(), arg.install[0] + "/" + arg.install[1], arg.install[0] + "-" + arg.install[1])
+        path = os.path.join(os.getcwd(), arg.install[0] + "/" + arg.install[1])
     else:
         path = path_[0]
     api.install(path, arg.install[0], arg.install[1])
