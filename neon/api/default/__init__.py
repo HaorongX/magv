@@ -1,11 +1,13 @@
-import os
-import gitrepo
+__all__ = ["download"]
+
+import api.default.gitrepo
 import requests
 import json
 import base64
+import os
 
 def INDEX_SERVICE(ext):
-    with open("config.json", "r") as f:
+    with open(os.path.join(__path__[0], "config.json"), "r") as f:
         token = json.loads(f.read())["Auth-Token"]
         f.close()
     req = requests.get("https://api.atomgit.com/repos/haorongxu/neon-index/contents/index.json", headers = {"Authorization":f"Bearer {token}"})
@@ -15,7 +17,4 @@ def INDEX_SERVICE(ext):
     return json.loads(base64.b64decode(b64str))[ext]
 
 def download(path, ext, ver):
-    gitrepo.download(path, INDEX_SERVICE(ext), ver)
-
-def install(arg1, arg2, arg3):
-    gitrepo.install(arg1, arg2, arg3)
+    api.default.gitrepo.download(path, INDEX_SERVICE(ext), ver)

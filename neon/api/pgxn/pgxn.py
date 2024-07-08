@@ -13,12 +13,3 @@ def download(path, extension, version):
     archive = zipfile.ZipFile(os.path.join(path, f.name), "r")
     archive.extractall(path = path)
     archive.close()
-
-def install(path, extension, ver):
-    os.chdir(path)
-    if os.path.isfile("autogen.sh"):
-        os.system("sh ./autogen.sh")
-    if os.path.isfile("configure"):
-        os.system("./configure")
-    os.system("make")
-    os.system("make install")
