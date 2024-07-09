@@ -1,5 +1,3 @@
-__all__ = ["download", "search"]
-
 import os
 import requests
 import zipfile
