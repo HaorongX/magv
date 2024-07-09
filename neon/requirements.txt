@@ -1,3 +1,4 @@
 argparse
 json
 base64
+tabulate
