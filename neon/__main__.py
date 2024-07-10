@@ -21,6 +21,12 @@ def search(ext):
     k = pgxn.search(ext) + default.search(ext, neon_config.config)
     return k
 
+def download(path, ext, ver, source):
+    if source == "Default":
+        default.download(path, ext, ver, neon_config.config)
+    elif k[i][1] == "PGXN":
+        pgxn.download(path, ext, ver)
+
 if not arg.search == None:
     print(tabulate(search(arg.search[0]), headers=['Extension', 'Source'], showindex="always"))
 
@@ -35,14 +41,19 @@ if not arg.download == None:
     k = search(arg.download[0])
     print(tabulate(k, headers=['Extension', 'Source'], showindex="always"))
     i = int(input(f"Which extension to download? [0 ~ {len(k)- 1}]"))
-    if k[i][1] == "Default":
-        default.download(path, k[i][0], arg.download[1], neon_config.config)
-    elif k[i][1] == "PGXN":
-        pgxn.download(path, k[i][0], arg.download[1])
+    download(path, k[i][0], arg.download[1], k[i][1])
 
 if not arg.install == None:
     if path_ == None:
         path = os.path.join(neon_config.config_path, arg.install[0])
     else:
         path = path_[0]
+    k = search(arg.install[0])
+    print(tabulate(k, headers=['Extension', 'Source'], showindex="always"))
+    i = int(input(f"Which extension to install? [0 ~ {len(k)- 1}]"))
+    j = input("Which version then? (specific version / latest)")
+    if j == "latest":
+        j = "master"
+    os.makedirs(path, exist_ok = True)
+    download(path, k[i][0], j, k[i][1])
     install.install(path)
