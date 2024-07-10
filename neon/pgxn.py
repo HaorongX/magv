@@ -1,6 +1,6 @@
 import os
 import requests
-import zipfile
+import shutil
 import json
 
 PGXN_API = "https://api.pgxn.org"
@@ -11,9 +11,10 @@ def download(path, extension, version):
     with open(os.path.join(path, f"{extension}-{version}.zip"), "wb+") as f:
         f.write(obj.content)
     f.close()
-    archive = zipfile.ZipFile(os.path.join(path, f.name), "r")
-    archive.extractall(path = path)
-    archive.close()
+    shutil.unpack_archive(os.path.join(path, f"{extension}-{version}.zip"), path)
+    os.system(f"mv {os.path.join(path, f'{extension}-{version}')}/* {path}")
+    os.removedirs(os.path.join(path, f"{extension}-{version}"))
+    os.remove(os.path.join(path, f.name))
 
 def search(ext):
     res = json.loads(requests.get(f"https://api.pgxn.org/search/extensions?q={ext}").content)["hits"]
