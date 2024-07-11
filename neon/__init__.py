@@ -8,6 +8,7 @@ class neon_config:
         if not os.path.isfile(self.config_json):
             os.makedirs(self.config_path, exist_ok = True)
             os.system(f"mv {os.path.join(os.path.dirname(__file__), "config_sample.json")} {self.config_json}")
+            print("WARNING: YOU SHOULD CHANGE YOUR CONFIGURE FILE MANUALLY AT ~/.neon/config.json TO USE NEON")
         with open(self.config_json) as f:
             self.config = json.loads(f.read())
             f.close()
