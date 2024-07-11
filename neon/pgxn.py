@@ -20,5 +20,5 @@ def search(ext):
     res = json.loads(requests.get(f"https://api.pgxn.org/search/extensions?q={ext}").content)["hits"]
     ext_list = list()
     for item in res:
-        ext_list.append([item["extension"], "PGXN"])
+        ext_list.append([item["extension"], "PGXN", item["abstract"]])
     return ext_list

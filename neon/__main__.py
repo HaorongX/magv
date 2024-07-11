@@ -22,13 +22,13 @@ def search(ext):
     return k
 
 def download(path, ext, ver, source):
-    if source == "Default":
+    if source == "NEON":
         default.download(path, ext, ver, neon_config)
     elif k[i][1] == "PGXN":
         pgxn.download(path, ext, ver)
 
 if not arg.search == None:
-    print(tabulate(search(arg.search[0]), headers=['Extension', 'Source'], showindex="always"))
+    print(tabulate(search(arg.search[0]), headers=['Extension', 'Source', 'Description'], showindex="always"))
 
 if not arg.download == None:
     if arg.download[1] == "latest":
@@ -39,7 +39,7 @@ if not arg.download == None:
         path = path_[0]
     os.makedirs(path, exist_ok = True)
     k = search(arg.download[0])
-    print(tabulate(k, headers=['Extension', 'Source'], showindex="always"))
+    print(tabulate(k, headers=['Extension', 'Source', 'Description'], showindex="always"))
     i = int(input(f"Which extension to download? [0 ~ {len(k)- 1}]"))
     download(path, k[i][0], arg.download[1], k[i][1])
 
@@ -49,7 +49,7 @@ if not arg.install == None:
     else:
         path = path_[0]
     k = search(arg.install[0])
-    print(tabulate(k, headers=['Extension', 'Source'], showindex="always"))
+    print(tabulate(k, headers=['Extension', 'Source', 'Description'], showindex="always"))
     i = int(input(f"Which extension to install? [0 ~ {len(k)- 1}]"))
     j = input("Which version then? (specific version / latest)")
     if j == "latest":
