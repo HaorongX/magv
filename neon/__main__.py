@@ -18,12 +18,12 @@ arg = parser.parse_args()
 path_  = arg.path
 
 def search(ext):
-    k = pgxn.search(ext) + default.search(ext, neon_config.config)
+    k = pgxn.search(ext) + default.search(ext, neon_config)
     return k
 
 def download(path, ext, ver, source):
     if source == "Default":
-        default.download(path, ext, ver, neon_config.config)
+        default.download(path, ext, ver, neon_config)
     elif k[i][1] == "PGXN":
         pgxn.download(path, ext, ver)
 
