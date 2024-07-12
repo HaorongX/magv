@@ -1,10 +1,10 @@
 import os
 import argparse
 from tabulate import tabulate
-import neon.default as default
-import neon.pgxn as pgxn
-import neon.install as install
-from neon import neon_config
+import magv.default as default
+import magv.pgxn as pgxn
+import magv.install as install
+from magv import magv_config
 
 def search(ext, config):
     try:
@@ -18,7 +18,7 @@ def download(path, ext, ver, source, config):
     if ver == "latest":
         ver = "master"
     try:
-        if source == "NEON":
+        if source == "MANGROVE":
             default.download(path, ext, ver, config)
         elif k[i][1] == "PGXN":
             pgxn.download(path, ext, ver, config)
@@ -27,8 +27,8 @@ def download(path, ext, ver, source, config):
         os.abort()
 
 if __name__ == "__main__":
-    config = neon_config()
-    parser = argparse.ArgumentParser(description = "Neon - PostgreSQL Extension Network Client")
+    config = magv_config()
+    parser = argparse.ArgumentParser(description = "MANGROVE - PostgreSQL Extension Network Client")
     parser.add_argument('-s', '--search', nargs = 1, help="Search for an extension", metavar = ("extension"))
     parser.add_argument('-d', '--download', nargs = 1, help="Download an extension", metavar = ("extension"))
     parser.add_argument('-i', '--install', nargs = 1, help="Install an extension", metavar = ("extension"))

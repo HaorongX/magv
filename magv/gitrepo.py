@@ -1,5 +1,4 @@
 import os
-import logging
 
 def download(path, extension, ver, config):
     try:

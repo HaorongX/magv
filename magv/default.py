@@ -1,4 +1,4 @@
-import neon.gitrepo as gitrepo
+import magv.gitrepo as gitrepo
 import json
 import os
 
@@ -25,7 +25,7 @@ def search(ext, config):
                 with open(os.path.join(config.repo_path, i), "r") as f:
                     item = json.loads(f.read())
                     f.close()
-                    res.append([i.rsplit(".", 1)[0], "NEON", item["abstract"]]) # Strip the ".json" part
+                    res.append([i.rsplit(".", 1)[0], "MANGROVE", item["abstract"]]) # Strip the ".json" part
     except Exception as e:
         config.logger.error("An error occured while searching extension")
         raise e
