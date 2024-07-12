@@ -49,3 +49,4 @@ Don't forget to run install with `sudo`! Although you can do so you'll receive a
 **e.g.**
 
 ![installeg](img/install.png)
+![installeg2](img/install2.png)
