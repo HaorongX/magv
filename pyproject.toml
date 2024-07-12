@@ -1,6 +1,8 @@
 [build-system]
 requires = [
 "argparse",
-"tabulate"
+"tabulate",
+"setuptools",
+"wheel"
 ]
 build-backend = "setuptools.build_meta"
