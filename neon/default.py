@@ -8,16 +8,25 @@ def download(path, ext, ver, config):
             repo = json.loads(f.read())["repo"]
             f.close()
     except Exception:
-        raise Exception("FATAL: Extension not found!")
-    gitrepo.download(path, repo, ver)
+        config.logger.error("Extension not found")
+        raise Exception("Extension not found")
+    try:
+        gitrepo.download(path, repo, ver, config)
+    except Exception as e:
+        config.logger.error("An error occured while downloading extension")
+        raise e
 
 def search(ext, config):
-    dist = os.listdir(config.repo_path)
-    res = list()
-    for i in dist:
-        if not i.find(ext) == -1:
-            with open(os.path.join(config.repo_path, i), "r") as f:
-                item = json.loads(f.read())
-                f.close()
-                res.append([i.rsplit(".", 1)[0], "NEON", item["abstract"]]) # Strip the ".json" part
+    try:
+        dist = os.listdir(config.repo_path)
+        res = list()
+        for i in dist:
+            if not i.find(ext) == -1:
+                with open(os.path.join(config.repo_path, i), "r") as f:
+                    item = json.loads(f.read())
+                    f.close()
+                    res.append([i.rsplit(".", 1)[0], "NEON", item["abstract"]]) # Strip the ".json" part
+    except Exception as e:
+        config.logger.error("An error occured while searching extension")
+        raise e
     return res

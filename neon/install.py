@@ -1,15 +1,23 @@
 import os
 
-def install(path):
+def install(path, config):
     if not os.getuid() == 0:
-        print("WARNING: You are trying to install an extension without sudo")
+        config.logger.warning("WARNING: You are trying to install an extension without sudo")
     try:
         os.chdir(path)
         if os.path.isfile("autogen.sh"):
-            os.system("sh ./autogen.sh")
+            if not os.system("sh ./autogen.sh") == 0:
+                config.logger.error("An error occured when running autogen.sh")
+                raise Exception
         if os.path.isfile("configure"):
-            os.system("./configure")
-        os.system("make")
-        os.system("make install")
+            if not os.system("./configure") == 0:
+                config.logger.error("An error occured when running configure")
+                raise Exception
+        if not os.system("make") == 0:
+            config.logger.error("An error occured when running making")
+            raise Exception
+        if not os.system("make install") == 0:
+            config.logger.error("An error occured when running making install")
+            raise Exception
     except Exception as e:
-        print("Installation failed: ", e.__cause__)
+        config.logger.error("Installation failed")
