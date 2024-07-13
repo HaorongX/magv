@@ -4,7 +4,18 @@ import shutil
 import json
 
 PGXN_API = "https://api.pgxn.org"
+
+def get_latest_ver(extension, config):
+    obj = requests.get(PGXN_API + f"/extension/{extension}.json")
+    config.logger.info(f"Get {extension} status from PGXN, HTTP status code {obj.status_code}")
+    if not obj.status_code == 200:
+        raise Exception(obj.status_code)
+    ext_json = json.loads(obj.content)
+    return ext_json[ext_json["latest"]]["version"]
+
 def download(path, extension, version, config):
+    if version == "master":
+        version = get_latest_ver(extension, config)
     obj = requests.get(PGXN_API + f"/dist/{extension}/{version}/{extension}-{version}.zip")
     config.logger.info(f"Downloaded {extension} from PGXN, HTTP status code {obj.status_code}")
     if not obj.status_code == 200:
