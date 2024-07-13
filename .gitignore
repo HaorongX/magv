@@ -2,3 +2,5 @@ test
 .vscode
 __pycache__
 config.json
+dist
+magv.egg-info

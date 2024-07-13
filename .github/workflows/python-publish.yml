@@ -16,13 +16,11 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: "3.8" # py_pkg 需要大于 3.6
-      # 依赖安装换成前面的脚本
+          python-version: "3.8"
       - name: Install dependencies
         run: |
           python3 -m pip install --upgrade build
           python3 -m pip install --user --upgrade twine
-      # 构建和发布换成前面的脚本
       - name: Build and publish
         env:
           TWINE_USERNAME: $
