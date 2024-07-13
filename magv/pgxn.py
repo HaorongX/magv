@@ -28,12 +28,15 @@ def download(path, extension, version, config):
         config.logger.error(f"Cannot write into {os.path.join(path, f'{extension}-{version}.zip')}")
         raise e
     try:
+        unzip_path = os.path.join(path, f'{extension}-{version}')
         shutil.unpack_archive(os.path.join(path, f"{extension}-{version}.zip"), path)
-        os.system(f"mv {os.path.join(path, f'{extension}-{version}')}/* {path}")
-        os.removedirs(os.path.join(path, f"{extension}-{version}"))
+        os.system(f"mv {unzip_path}/* {path}")
+        os.system(f"mv {unzip_path}/.[!.]* {path}")
+        os.system(f"rm -rf {unzip_path}")
         os.remove(os.path.join(path, f.name))
     except Exception as e:
         config.logger.error(f"An error occured while performing file operations")
+        config.logger.error(e)
         raise e
 
 def search(ext, config):
