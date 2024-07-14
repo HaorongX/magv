@@ -51,9 +51,12 @@ if __name__ == "__main__":
             config.logger.error(f"Failed to create directories at {path}")
             os.abort()
         k = search(arg.download[0], config)
+        if len(k) == 0:
+            print("No extension found.")
+            exit(0)
         print(tabulate(k, headers=['Extension', 'Source', 'Description'], showindex="always"))
-        i = int(input(f"Which extension to download? [0 ~ {len(k)- 1}]"))
-        j = input(f"Which version then?")
+        i = int(input(f"Which extension to download? [0 ~ {len(k)- 1}] "))
+        j = input(f"Which version then? (specific version / latest) ")
         download(path, k[i][0], j, k[i][1], config)
 
     if not arg.install == None:
@@ -62,15 +65,23 @@ if __name__ == "__main__":
         else:
             path = path_[0]
         k = search(arg.install[0], config)
+        if len(k) == 0:
+            print("No extension found.")
+            exit(0)
         print(tabulate(k, headers=['Extension', 'Source', 'Description'], showindex="always"))
-        i = int(input(f"Which extension to install? [0 ~ {len(k)- 1}]"))
-        j = input("Which version then? (specific version / latest)")
-        try:
-            os.makedirs(path, exist_ok = True)
-        except:
-            config.logger.error(f"Failed to create directories at {path}")
-            os.abort()
-        download(path, k[i][0], j, k[i][1], config)
+        i = int(input(f"Which extension to install? [0 ~ {len(k)- 1}] "))
+        j = input("Which version then? (specific version / latest) ")
+        choice = 'n'
+        if os.path.exists(path):
+            choice = input(f"It seems you've already downloaded {k[i][0]}, install from local folder? (y/N) ")
+        if not (choice == 'y' or choice == 'Y'):
+            try:
+                os.system(f"rm -rf {path}")
+                os.makedirs(path, exist_ok = True)
+            except:
+                config.logger.error(f"Failed to create directories at {path}")
+                os.abort()
+            download(path, k[i][0], j, k[i][1], config)
         try:
             install.install(path, config)
         except:
