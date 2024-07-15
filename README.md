@@ -13,8 +13,11 @@ Then execute `python3 -m magv' and `sudo python3 -m magv` to perform initializat
 
 ```
 WARNING: YOU SHOULD CHANGE YOUR CONFIGURE FILE MANUALLY AT ~/.magv/config.json TO USE MANGROVE
-[1]    577260 IOT instruction (core dumped)  python3 -m magv
 ```
+
+#### Upgrading
+
+You may upgrade mangrove by running `pip3 install magv --upgrade`. But if you are using PyPI mirror you might **NOT** get the latest version.
 
 ## Usage
 
