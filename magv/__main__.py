@@ -26,6 +26,23 @@ def download(path, ext, ver, source, config):
         config.logger.error(f"Failed to download {ext}")
         exit(1)
 
+def secure_input(hint, type, lower_bound = 0, upper_bound = 0):
+    print(hint)
+    if type == "str":
+        k = input()
+        while k.strip() == "":
+            print(hint)
+            k = input()
+    elif type == "int":
+        k = int(input())
+        while k > upper_bound or k < lower_bound:
+            print(hint)
+            try:
+                k = int(input())
+            except ValueError: # e.g. a float num is given
+                k = lower_bound - 1 # So the loop will excute again
+    return k
+
 if __name__ == "__main__":
     config = magv_config()
     parser = argparse.ArgumentParser(description = "MANGROVE - PostgreSQL Extension Network Client")
@@ -41,41 +58,45 @@ if __name__ == "__main__":
         print(tabulate(search(arg.search[0], config), headers=['Extension', 'Source', 'Description'], showindex="always"))
 
     if not arg.download == None:
-        if path_ == None:
-            path = os.path.join(config.config_path, arg.download[0])
-        else:
-            path = path_[0]
-        try:
-            if os.path.isdir(path):
-                k = input("Folder already exists, empty the folder? (Y/n)")
-                if not (k == 'n' or k == 'N'):
-                    os.system(f"rm -rf {path}")
-            os.makedirs(path, exist_ok = True)
-        except:
-            config.logger.error(f"Failed to create directories at {path}")
-            exit(1)
         k = search(arg.download[0], config)
         if len(k) == 0:
             print("No extension found.")
             exit(0)
         print(tabulate(k, headers=['Extension', 'Source', 'Description'], showindex="always"))
-        i = int(input(f"Which extension to download? [0 ~ {len(k)- 1}] "))
-        j = input(f"Which version then? (specific version / latest) ")
+        i = 0
+        if not len(k) == 1:
+            i = secure_input(f"Which extension to download? [0 ~ {len(k)- 1}] ", "int", 0, len(k) - 1)
+        j = secure_input("Which version then? (specific version / latest) ", "str")
+        if path_ == None:
+            path = os.path.join(config.config_path, k[i][0])
+        else:
+            path = path_[0]
+        try:
+            if os.path.isdir(path):
+                option = input("Folder already exists, empty the folder? (Y/n)")
+                if not (option == 'n' or option == 'N'):
+                    os.system(f"rm -rf {path}")
+            os.makedirs(path, exist_ok = True)
+        except:
+            config.logger.error(f"Failed to create directories at {path}")
+            exit(1)
         download(path, k[i][0], j, k[i][1], config)
 
     if not arg.install == None:
-        if path_ == None:
-            path = os.path.join(config.config_path, arg.install[0])
-        else:
-            path = path_[0]
         k = search(arg.install[0], config)
         if len(k) == 0:
             print("No extension found.")
             exit(0)
         print(tabulate(k, headers=['Extension', 'Source', 'Description'], showindex="always"))
-        i = int(input(f"Which extension to install? [0 ~ {len(k)- 1}] "))
-        j = input("Which version then? (specific version / latest) ")
+        i = 0
+        if not len(k) == 1:
+            i = secure_input(f"Which extension to install? [0 ~ {len(k)- 1}] ", "int", 0, len(k) - 1)
+        j = secure_input("Which version then? (specific version / latest) ", "str")
         choice = 'n'
+        if path_ == None:
+            path = os.path.join(config.config_path, k[i][0])
+        else:
+            path = path_[0]
         if os.path.exists(path):
             choice = input(f"It seems you've already downloaded {k[i][0]}, install from local folder? (y/N) ")
         if not (choice == 'y' or choice == 'Y'):
