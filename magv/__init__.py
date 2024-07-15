@@ -4,6 +4,10 @@ import logging
 
 name = "magv"
 
+config_sample = '''{
+    "Index-Repo" : "https://atomgit.com/haorongxu/magv-index.git"
+}'''
+
 class magv_config:
     def __init__(self):
         self.logger = logging.getLogger("MANGROVE")
@@ -15,7 +19,9 @@ class magv_config:
             FIRST_RUN = False
             if not os.path.isfile(self.config_json):
                 os.makedirs(self.config_path, exist_ok = True)
-                os.system(f"cp {os.path.join(os.path.dirname(__file__), "config_sample.json")} {self.config_json}")
+                with open(self.config_json, "w+") as f:
+                    f.write(config_sample)
+                    f.close()
                 FIRST_RUN = True
             logging.basicConfig(filename=os.path.expanduser("~/.magv/magv.log"), level=logging.DEBUG, filemode="w+")
             with open(self.config_json) as f:
