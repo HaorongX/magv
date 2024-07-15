@@ -39,4 +39,4 @@ class magv_config:
                     os.chdir(current_working_dir)
         except:
             self.logger.fatal("An error occured while initialization")
-            os.abort()
+            exit(1)

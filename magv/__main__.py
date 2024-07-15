@@ -12,7 +12,7 @@ def search(ext, config):
         return k
     except Exception:
         config.logger.error(f"Failed to download {ext}")
-        os.abort()
+        exit(1)
 
 def download(path, ext, ver, source, config):
     if ver == "latest":
@@ -24,7 +24,7 @@ def download(path, ext, ver, source, config):
             pgxn.download(path, ext, ver, config)
     except Exception:
         config.logger.error(f"Failed to download {ext}")
-        os.abort()
+        exit(1)
 
 if __name__ == "__main__":
     config = magv_config()
@@ -49,7 +49,7 @@ if __name__ == "__main__":
             os.makedirs(path, exist_ok = True)
         except:
             config.logger.error(f"Failed to create directories at {path}")
-            os.abort()
+            exit(1)
         k = search(arg.download[0], config)
         if len(k) == 0:
             print("No extension found.")
@@ -80,9 +80,9 @@ if __name__ == "__main__":
                 os.makedirs(path, exist_ok = True)
             except:
                 config.logger.error(f"Failed to create directories at {path}")
-                os.abort()
+                exit(1)
             download(path, k[i][0], j, k[i][1], config)
         try:
             install.install(path, config)
         except:
-            os.abort()
+            exit(1)
