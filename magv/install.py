@@ -1,9 +1,6 @@
 import os
 
 def install(path, config):
-    if os.getuid() == 0:
-        print("WARNING: ")
-        config.logger.warning("WARNING: You are trying to install an extension with sudo")
     try:
         if os.path.isfile(os.path.join(path, ".REQUIREMENTS")):
             with open(os.path.join(path, ".REQUIREMENTS")) as f:

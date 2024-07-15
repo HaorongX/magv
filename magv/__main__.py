@@ -45,6 +45,12 @@ def secure_input(hint, type, lower_bound = 0, upper_bound = 0):
 
 if __name__ == "__main__":
     config = magv_config()
+    try:
+        if os.path.isfile(os.path.expanduser(config.config["Postscript"])):
+            print("Executing initialization script!")
+            os.system(f"sh {os.path.expanduser(config.config["Postscript"])}")
+    except:
+        config.logger.info("Failed to load postscript")
     parser = argparse.ArgumentParser(description = "MANGROVE - PostgreSQL Extension Network Client")
     parser.add_argument('-s', '--search', nargs = 1, help="Search for an extension", metavar = ("extension"))
     parser.add_argument('-d', '--download', nargs = 1, help="Download an extension", metavar = ("extension"))
@@ -107,7 +113,10 @@ if __name__ == "__main__":
                 config.logger.error(f"Failed to create directories at {path}")
                 exit(1)
             download(path, k[i][0], j, k[i][1], config)
+        else:
+            print("WARNING: Please make sure the local extension is intact and secure.\n")
         try:
+            
             install.install(path, config)
         except:
             exit(1)
