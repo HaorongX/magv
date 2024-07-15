@@ -13,10 +13,11 @@ def download(path, ext, ver, config):
     try:
         gitrepo.download(path, dist["repo"], ver, config)
         with open(os.path.join(path, ".REQUIREMENTS"), "w+") as f:
-            f.write(dist["requirements"])
+            f.write(str(dist["requirements"]))
             f.close()
     except Exception as e:
         config.logger.error("An error occured while downloading extension")
+        config.logger.error(e)
         raise e
 
 def search(ext, config):
