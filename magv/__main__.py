@@ -46,6 +46,10 @@ if __name__ == "__main__":
         else:
             path = path_[0]
         try:
+            if os.path.isdir(path):
+                k = input("Folder already exists, empty the folder? (Y/n)")
+                if not (k == 'n' or k == 'N'):
+                    os.system(f"rm -rf {path}")
             os.makedirs(path, exist_ok = True)
         except:
             config.logger.error(f"Failed to create directories at {path}")

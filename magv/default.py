@@ -5,13 +5,16 @@ import os
 def download(path, ext, ver, config):
     try:
         with open(os.path.join(config.repo_path, f"{ext}.json"), "r") as f:
-            repo = json.loads(f.read())["repo"]
+            dist = json.loads(f.read())
             f.close()
     except Exception:
         config.logger.error("Extension not found")
         raise Exception("Extension not found")
     try:
-        gitrepo.download(path, repo, ver, config)
+        gitrepo.download(path, dist["repo"], ver, config)
+        with open(os.path.join(path, ".REQUIREMENTS"), "w+") as f:
+            f.write(dist["requirements"])
+            f.close()
     except Exception as e:
         config.logger.error("An error occured while downloading extension")
         raise e

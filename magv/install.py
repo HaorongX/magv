@@ -1,9 +1,19 @@
 import os
 
 def install(path, config):
-    if not os.getuid() == 0:
-        config.logger.warning("WARNING: You are trying to install an extension without sudo")
+    if os.getuid() == 0:
+        print("WARNING: ")
+        config.logger.warning("WARNING: You are trying to install an extension with sudo")
     try:
+        if os.path.isfile(os.path.join(path, ".REQUIREMENTS")):
+            with open(os.path.join(path, ".REQUIREMENTS")) as f:
+                print("This extension requires the following libraries, please ensure you've already installed them: ")
+                print(f.read())
+                f.close()
+                k = input("Proceed? (Y/n) ")
+                if k == 'n' or k == 'N':
+                    config.logger.info("User ends the installation because required libraries are not installed")
+                    exit(0)
         os.chdir(path)
         if os.path.isfile("autogen.sh"):
             if not os.system("sh ./autogen.sh") == 0:
