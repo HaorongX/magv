@@ -45,9 +45,9 @@ Similar to searching command, this function also gives you a list of extensions,
 ```
 sudo python3 -m magv -i/--install [extension]
 ```
-This function does pretty much the same job as downloading function, but it automatically install the extension. (However, you'll need to install all required library manually)
+This function does pretty much the same job as downloading function, but it automatically install the extension. (However, you'll need to install all required library manually). You may also install an extension from a local folder by add argument `-p [path to extension]`.
 
-Don't forget to run install with `sudo`! Although you can do so you'll receive a warning message.
+WARNING: In case you need to install an extension from local folder with `root` permission, please always specify -p arugument if you ran `magv -d` with other users. Nevertheless, remember to set $PATH appropriately for root.
 
 **e.g.**
 

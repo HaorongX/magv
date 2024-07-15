@@ -42,7 +42,7 @@ python3 -m magv -d/--download [extension]
 ```
 sudo python3 -m magv -i/--install [extension]
 ```
-该命令几乎与下载插件一样，只不过插件的 `autogen.sh`, `configure`脚本, `Makefile` 将被自动运行以安装插件，请注意用合适的用户运行程序。如果您使用了非 `root` 用户，程序将给出警告。
+该命令几乎与下载插件一样，只不过插件的 `autogen.sh`, `configure`脚本, `Makefile` 将被自动运行以安装插件。同时也可以通过 `-p [path to extension]` 制定从本地的文件夹安装。请注意用合适的用户运行程序。如果您使用了非 `root` 用户，程序将给出警告。如果您使用 root 用户，也请为其配置好环境变量。尽量用同一个用户进行下载和安装以避免潜在的问题。
 
 ![installeg](img/install.png)
 ![installeg2](img/install2.png)
