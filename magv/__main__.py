@@ -57,6 +57,7 @@ if __name__ == "__main__":
     parser.add_argument('-i', '--install', nargs = 1, help="Install an extension", metavar = ("extension"))
     parser.add_argument('-p', '--path', nargs = 1, help = "Specify the installtion source / Download destination", metavar = "path")
     parser.add_argument('-v', '--version', nargs = 1, help = "Speicify which version to download or install", metavar = "version")
+    parser.add_argument('-r', '--root', action = "store_true", help = "Install extension with root permission")
 
     arg = parser.parse_args()
     path_  = arg.path
@@ -120,7 +121,9 @@ if __name__ == "__main__":
         else:
             print("WARNING: Please make sure the local extension is intact and secure.\n")
         try:
-            
-            install.install(path, config)
+            if arg.root == None:
+                install.install(path, config)
+            else:
+                install.install(path, config, True)
         except:
             exit(1)

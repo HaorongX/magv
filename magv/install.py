@@ -1,6 +1,8 @@
 import os
+from subprocess import Popen, PIPE
+import getpass
 
-def install(path, config):
+def install(path, config, root = False):
     try:
         if os.path.isfile(os.path.join(path, ".REQUIREMENTS")):
             with open(os.path.join(path, ".REQUIREMENTS")) as f:
@@ -23,8 +25,14 @@ def install(path, config):
         if not os.system("make") == 0:
             config.logger.error("An error occured when running making")
             raise Exception
-        if not os.system("make install") == 0:
-            config.logger.error("An error occured when running making install")
-            raise Exception
+        if root == False:
+            if not os.system("make install") == 0:
+                config.logger.error("An error occured when running making install")
+                raise Exception
+        else:
+            passwd = getpass.getpass("[sudo] Your password: ")
+            if not os.system(f"echo {passwd} | sudo -S make install") == 0:
+                config.logger.error("An error occured when running making install")
+                raise Exception
     except Exception as e:
         config.logger.error("Installation failed")
