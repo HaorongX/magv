@@ -14,6 +14,14 @@ pip3 install magv
 WARNING: YOU SHOULD CHANGE YOUR CONFIGURE FILE MANUALLY AT ~/.magv/config.json TO USE MANGROVE
 ```
 
+同时你也可以指定一个 shell 脚本，在每次 magv 启动时运行，实现如配置环境变量等效果。在配置文件中增加 `Postscript` 一项即可，下面是一个范例：
+```
+{
+    "Index-Repo" : "https://atomgit.com/haorongxu/magv-index.git",
+    "Postscript" : "~/test.sh"
+}
+```
+
 #### 更新
 
 请通过 `pip3 install magv --upgrade` 更新本程序. 请注意，如果你使用镜像 PyPI 源，将有可能不能更新到最新版本。

@@ -15,6 +15,15 @@ Then execute `python3 -m magv' and `sudo python3 -m magv` to perform initializat
 WARNING: YOU SHOULD CHANGE YOUR CONFIGURE FILE MANUALLY AT ~/.magv/config.json TO USE MANGROVE
 ```
 
+By the way, you may specify a shell script for Mangrove to run when the program starts. You may specify this script in your configure file using "Postscript" option, here is an example:
+
+```
+{
+    "Index-Repo" : "https://atomgit.com/haorongxu/magv-index.git",
+    "Postscript" : "~/test.sh"
+}
+```
+
 #### Upgrading
 
 You may upgrade mangrove by running `pip3 install magv --upgrade`. But if you are using PyPI mirror you might **NOT** get the latest version.

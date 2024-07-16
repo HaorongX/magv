@@ -56,9 +56,15 @@ if __name__ == "__main__":
     parser.add_argument('-d', '--download', nargs = 1, help="Download an extension", metavar = ("extension"))
     parser.add_argument('-i', '--install', nargs = 1, help="Install an extension", metavar = ("extension"))
     parser.add_argument('-p', '--path', nargs = 1, help = "Specify the installtion source / Download destination", metavar = "path")
+    parser.add_argument('-v', '--version', nargs = 1, help = "Speicify which version to download or install", metavar = "version")
 
     arg = parser.parse_args()
     path_  = arg.path
+    
+    if not arg.version == None:
+        j = arg.version[0]
+    else:
+        j = "latest"
 
     if not arg.search == None:
         print(tabulate(search(arg.search[0], config), headers=['Extension', 'Source', 'Description'], showindex="always"))
@@ -72,7 +78,6 @@ if __name__ == "__main__":
         i = 0
         if not len(k) == 1:
             i = secure_input(f"Which extension to download? [0 ~ {len(k)- 1}] ", "int", 0, len(k) - 1)
-        j = secure_input("Which version then? (specific version / latest) ", "str")
         if path_ == None:
             path = os.path.join(config.config_path, k[i][0])
         else:
@@ -97,7 +102,6 @@ if __name__ == "__main__":
         i = 0
         if not len(k) == 1:
             i = secure_input(f"Which extension to install? [0 ~ {len(k)- 1}] ", "int", 0, len(k) - 1)
-        j = secure_input("Which version then? (specific version / latest) ", "str")
         choice = 'n'
         if path_ == None:
             path = os.path.join(config.config_path, k[i][0])
