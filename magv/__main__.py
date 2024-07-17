@@ -5,6 +5,7 @@ import magv.default as default
 import magv.pgxn as pgxn
 import magv.install as install
 from magv import magv_config
+import magv.integrity as integrity
 
 def search(ext, config):
     try:
@@ -22,6 +23,7 @@ def download(path, ext, ver, source, config):
             default.download(path, ext, ver, config)
         elif k[i][1] == "PGXN":
             pgxn.download(path, ext, ver, config)
+        integrity.create_int_file(path)
     except Exception:
         config.logger.error(f"Failed to download {ext}")
         exit(1)
@@ -109,7 +111,11 @@ if __name__ == "__main__":
         else:
             path = path_[0]
         if os.path.exists(path):
-            choice = input(f"It seems you've already downloaded {k[i][0]}, install from local folder? (y/N) ")
+            if integrity.integrity_check(path, config) == False:
+                print("WARNING: Integrity check FAILED, the extension in your local folder might be broken or it might not be downloaded using Mangrove")
+                choice = input("Proceed? (y/N) ")
+            else:
+                choice = input(f"It seems you've already downloaded {k[i][0]}, install from local folder? (y/N) ")
         if not (choice == 'y' or choice == 'Y'):
             try:
                 os.system(f"rm -rf {path}")
