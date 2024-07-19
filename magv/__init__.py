@@ -5,7 +5,7 @@ import logging
 name = "magv"
 
 config_sample = '''{
-    "Index-Repo" : "https://atomgit.com/haorongxu/magv-index.git"
+    "Index-Repo" : "https://atomgit.com/zouxiangneihe/magv-index.git"
 }'''
 
 class magv_config:
