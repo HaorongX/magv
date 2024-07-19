@@ -31,7 +31,6 @@ class magv_config:
                     os.system(f"git clone {self.config['Index-Repo']} {self.repo_path}")
                     print("WARNING: YOU SHOULD CHANGE YOUR CONFIGURE FILE MANUALLY AT ~/.magv/config.json TO USE MANGROVE")
                     self.logger.warning("WARNING: YOU SHOULD CHANGE YOUR CONFIGURE FILE MANUALLY AT ~/.magv/config.json TO USE MANGROVE")
-                    exit(1)
                 else:
                     current_working_dir = os.getcwd()
                     os.chdir(self.repo_path)
