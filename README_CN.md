@@ -54,3 +54,7 @@ sudo python3 -m magv -i/--install [extension]
 
 ![installeg](img/install.png)
 ![installeg2](img/install2.png)
+
+### 参与进来
+
+你可以到 [Mangrove Index](https://atomgit.com/zouxiangneihe/magv-index) 上传自己的插件，也可以创建 Pull Request 来贡献你的源码。

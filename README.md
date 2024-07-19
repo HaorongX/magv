@@ -4,7 +4,7 @@ This is a PostgreSQL extension manager, a command-line tool to download and inst
 
 ## Installation
 
-Mangrove is available on [Github](https://github.com/HaorongX/magv/), [AtomGIT](https://atomgit.com/haorongxu/magv), and [PyPI](https://pypi.org/project/magv/). It can be installed via `pip`
+Mangrove is available on [Github](https://github.com/HaorongX/magv/), [AtomGIT](https://atomgit.com/zouxiangneihe/Mangrove), and [PyPI](https://pypi.org/project/magv/). It can be installed via `pip`
 ```
 pip3 install magv
 ```
@@ -62,3 +62,9 @@ WARNING: In case you need to install an extension from local folder with `root` 
 
 ![installeg](img/install.png)
 ![installeg2](img/install2.png)
+
+### Get Involved
+
+You can upload you own extension to [Mangrove Index](https://atomgit.com/zouxiangneihe/magv-index)
+
+And you can make contribution to Mangrove by creating a PULL REQUEST.
